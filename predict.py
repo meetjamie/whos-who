@@ -11,15 +11,17 @@ import re
 import subprocess
 import datetime
 
+HUGGINGFACE_DIARIZATION_MODEL = "pyannote/speaker-diarization"
+HUGGINGFACE_TOKEN="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"
+
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
-        # self.model = torch.load("./weights.pth")
-        self.pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization",
-                                    use_auth_token="yourToken")
+        self.pipeline = Pipeline.from_pretrained(HUGGINGFACE_DIARIZATION_MODEL,
+                                    use_auth_token=HUGGINGFACE_TOKEN)
 
     def predict(
-        self,,
+        self,
         audio: Path = Input(description="Audio file in most common audio formats"),
     ) -> List[Path]:
         """Run a single prediction on the model"""
