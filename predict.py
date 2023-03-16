@@ -108,7 +108,7 @@ class Predictor(BasePredictor):
             speaker = match.group()
 
             gidx += 1
-            path = str(audioChunkIndex) + "_" + str(gidx) + "_" + str(speaker) + "_" + str(roundedDuration) +'.wav'
+            path = str(gidx) + "_" + str(speaker) + "_" + str(roundedDuration) +'.wav'
 
             audioFile[start:end].export(path, format='wav')
             output.append(Path(path))

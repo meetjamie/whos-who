@@ -2,3 +2,4 @@ adjustedAudio.wav
 convertedAudio.wav
 diarization.txt
 *.pyc
+.cog
