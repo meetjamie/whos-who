@@ -4,6 +4,9 @@ on:
   schedule:
     # Schedule the workflow to run every day at a specific time (e.g., 00:00 UTC)
     - cron: '0 0 * * *'
+  pull_request:
+    types:
+      - opened
 
 jobs:
   download-model:
