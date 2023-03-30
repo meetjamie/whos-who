@@ -23,7 +23,12 @@ class Predictor(BasePredictor):
     def predict(
         self,
         audio: Path = Input(description="Audio file in most common audio formats"),
-    ) -> List[Path]:
+        output_format: str = Input(
+            choices=["audio_files", "text"],
+            default="audio_files",
+            description="Choose what format you want from the diarization (either segmented audio files or text information on start and stop times)",
+        ),
+    ) -> Dict[str, Union[List[Dict[str, str]]]]:
         """Run a single prediction on the model"""
 
         # convert input file to wav
@@ -86,6 +91,13 @@ class Predictor(BasePredictor):
         
         # creating & saving corresponding audio parts
         audioFile = AudioSegment.from_wav("adjustedAudio.wav")
+
+        # defining outputs to be filled
+        # Prepare the JSON-like object to store speaker turns
+        speaker_turns = []
+        # Prepare the list to store audio file paths
+        audio_file_paths = []
+
         gidx = -1
         output = []
         for g in groups:
@@ -111,10 +123,21 @@ class Predictor(BasePredictor):
             path = str(gidx) + "_" + str(speaker) + "_" + str(roundedDuration) +'.wav'
 
             audioFile[start:end].export(path, format='wav')
-            output.append(Path(path))
+            
+            # Append speaker turn details to the list
+            speaker_turns.append({
+                "speaker": speaker,
+                "duration": roundedDuration,
+                "audio_file": path
+            })
 
-        # returning results
-        return output
+
+        # Construct the result dictionary and return it
+        result = {
+            "speaker_turns": speaker_turns,
+        }
+        
+        return result
 
 def convert_to_wav(input_file, output_file):
     # Check if input file exists
