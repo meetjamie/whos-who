@@ -29,10 +29,10 @@ jobs:
       - name: Download model weights
         run: |
           python -c "
-          import torch
-          model_name = 'pyannote/speaker-diarization'
-          model = torch.hub.load('pyannote/pyannote-audio', model=model_name, source='huggingface')
-          torch.save(model.state_dict(), './models/diarization_model.pth')
+          from pyannote.audio.tasks.embedding import SpeakerEmbedding
+          model_name = 'pyannote/speaker_embedding'
+          model = SpeakerEmbedding.from_pretrained(model_name)
+          torch.save(model.state_dict(), './models/speaker_embedding_model.pth')
           "
 
       - name: Commit and push changes
