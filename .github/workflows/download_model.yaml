@@ -1,12 +1,6 @@
 name: Download Model Weights
 
 on:
-  schedule:
-    # Schedule the workflow to run every day at a specific time (e.g., 00:00 UTC)
-    - cron: '0 0 * * 0'
-  pull_request:
-    types:
-      - opened
   push:
 
 jobs:
@@ -35,11 +29,10 @@ jobs:
       - name: Download model weights
         run: |
           python -c "
-          from pyannote.audio import Pipeline
-          HUGGINGFACE_DIARIZATION_MODEL = 'pyannote/speaker-diarization'
-          HUGGINGFACE_TOKEN = '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'
-          pipeline = Pipeline.from_pretrained("HUGGINGFACE_DIARIZATION_MODEL", use_auth_token=HUGGINGFACE_TOKEN)
-          pipeline.save_pretrained('./models/diarization_model')
+          import torch
+          model_name = 'pyannote/speaker-diarization'
+          model = torch.hub.load('pyannote/pyannote-audio', model=model_name, source='huggingface')
+          torch.save(model.state_dict(), './models/diarization_model.pth')
           "
 
       - name: Commit and push changes
