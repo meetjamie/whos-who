@@ -28,7 +28,7 @@ class Predictor(BasePredictor):
             default="audio_files",
             description="Choose what format you want from the diarization (either segmented audio files or text information on start and stop times)",
         ),
-    ) -> Dict[str, Union[List[Dict[str, str]], List[Path]]]:
+    ) -> Dict[str, Union[List[Dict[str, str]]]]:
         """Run a single prediction on the model"""
 
         # convert input file to wav
@@ -131,13 +131,10 @@ class Predictor(BasePredictor):
                 "audio_file": path
             })
 
-            # Append audio file path to the list
-            audio_file_paths.append(Path(path))
 
         # Construct the result dictionary and return it
         result = {
             "speaker_turns": speaker_turns,
-            "audio_files": audio_file_paths
         }
         
         return result
