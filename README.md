@@ -4,6 +4,25 @@ This is an implementation of [pyannote.audio](https://github.com/pyannote/pyanno
 ## How this model works
 The model takes an input audio file in the `audio` parameter. Then, it runs speaker diarization and returns a list of audio files containing the individual speaker turns within the audio file split by speaker and index. The output URLs contain encoded information in the file name to make working with the outputs easier. The format for the file name is `{index}_{speaker}_{duration}` which resolves to `0_SPEAKER_01_16`. Duration is in seconds. Index refers to the order of speaker turns.
 
+The output of the model is a json-like object sturcutred as follows:
+
+```
+{
+  "speaker_turns": [
+    {
+      "speaker": "SPEAKER_01",
+      "duration": 16,
+      "audio_file": "0_SPEAKER_01_16.wav"
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "duration": 8,
+      "audio_file": "1_SPEAKER_02_8.wav"
+    }
+  ]
+}
+```
+
 ## Building this model with Cog
 
 1. SSH into a Linux environment with a GPU
