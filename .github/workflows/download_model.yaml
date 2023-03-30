@@ -38,7 +38,7 @@ jobs:
           from pyannote.audio import Pipeline
           HUGGINGFACE_DIARIZATION_MODEL = 'pyannote/speaker-diarization'
           HUGGINGFACE_TOKEN = '${{ secrets.HUGGINGFACE_TOKEN }}'
-          pipeline = Pipeline.from_pretrained(HUGGINGFACE_DIARIZATION_MODEL, use_auth_token=HUGGINGFACE_TOKEN)
+          pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization", use_auth_token="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")
           pipeline.save_pretrained('./models/diarization_model')
           "
 
