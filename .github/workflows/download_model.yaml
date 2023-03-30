@@ -28,6 +28,7 @@ jobs:
 
       - name: Download model weights
         run: |
+          python -c "
           from pyannote.audio import Pipeline
           HUGGINGFACE_DIARIZATION_MODEL = "pyannote/speaker-diarization"
           HUGGINGFACE_TOKEN="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"
