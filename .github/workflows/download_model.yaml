@@ -31,12 +31,12 @@ jobs:
         run: |
           python -c "
           from pyannote.audio import Pipeline
-          HUGGINGFACE_DIARIZATION_MODEL = "pyannote/speaker-diarization"
-          HUGGINGFACE_TOKEN="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"
+          HUGGINGFACE_DIARIZATION_MODEL = 'pyannote/speaker-diarization'
+          HUGGINGFACE_TOKEN = '${{ secrets.HUGGINGFACE_TOKEN }}'
           pipeline = Pipeline.from_pretrained(HUGGINGFACE_DIARIZATION_MODEL, use_auth_token=HUGGINGFACE_TOKEN)
-          # Save the model weights to a directory in the repository
-          pipeline.save_pretrained("./models/diarization_model")
-        
+          pipeline.save_pretrained('./models/diarization_model')
+          "
+
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
